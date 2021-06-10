@@ -44,7 +44,6 @@ export default class App {
     this.initializeGrid();
     this.initializeHands();
     this.initializeGestures();
-    this.initializeGestureClassifier();
   }
 
   initializeHTMLElements() {
@@ -111,14 +110,6 @@ export default class App {
     this.gestures = new Gestures(this.canvasWidth, this.canvasHeight);
   }
 
-  initializeGestureClassifier() {
-    this.gestureClassifier = new GestureClassifier(this.callbackTriggerInstrument.bind(this));
-  }
-
-  callbackTriggerInstrument(instrument) {
-    this.music.startInstrumentPlayer(instrument, true);
-  }
-
   /**
    * Draw hand points
    * @param {Array} results - TBD
@@ -141,18 +132,13 @@ export default class App {
 
     if (leftHandPoints.length) {
       this.leftHand.draw(leftHandPoints);
-      // this.gestures.getGesture('bpm', [leftHandPoints[4], leftHandPoints[8]]);
-      this.gestureClassifier.handInImage = true;
-      const imageData = this.ctxVideo.getImageData(this.canvasWidth/2, 0, this.canvasWidth/2, this.canvasHeight);
-      this.gestureClassifier.animate(imageData);
-    } else {
-      this.gestureClassifier.handInImage = false;
+      // this.gestures.getGesture('bpm', [leftHandPoints[4], leftHandPoints[8]]); 
     }
   }
 
   checkRightHandTouch() {
     const touchedElements = Util.checkGridTouch(
-      this.grid.elements,
+      this.grid.cells,
       this.grid.gridNotes,
       this.rightHand.activePoints,
       { 

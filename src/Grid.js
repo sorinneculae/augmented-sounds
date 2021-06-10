@@ -2,7 +2,7 @@ import configMusic from "./config/configMusic.js";
 
 export default class Grid {
 
-  elements = [];
+  cells = [];
   gridNotes = {};
   clickCallback;
 
@@ -34,7 +34,7 @@ export default class Grid {
         toneDiv.classList.add('tone');
         octave.appendChild(toneDiv);
         
-        this.elements.push(toneDiv);
+        this.cells.push(toneDiv);
         this.gridNotes[toneDiv.id] = { currentNote };
       }
     }
