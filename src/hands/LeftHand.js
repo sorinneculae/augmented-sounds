@@ -1,5 +1,6 @@
-import configHands from '../config/configHands.js';
 import Hand from './Hand.js';
+
+import configHands from '../config/configHands.js';
 
 export default class LeftHand extends Hand {
   constructor(ctx, w, h) {

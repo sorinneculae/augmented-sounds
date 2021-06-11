@@ -1,6 +1,6 @@
 const config = {
   videoWidth: { min: 780, ideal: 780, max: 1024 },
-  videoHeight: { min: 439, max: 768 },
+  videoHeight: { min: 440, max: 768 },
   handDetection: {
     url: 'https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.1/',
     options: {

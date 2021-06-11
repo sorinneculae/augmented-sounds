@@ -42,7 +42,7 @@ main {
   padding-top: 20px;
 }
 
-.tone, .instrument-cell {
+.grid-cell, .instrument-cell {
   width: 35px;
   height: 25px;
   box-sizing: border-box;
@@ -58,7 +58,7 @@ main {
   margin: 1px;
 }
 
-.note-active {
+.grid-cell.active {
   background-color: green;
 }
 

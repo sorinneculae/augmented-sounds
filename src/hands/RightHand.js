@@ -4,7 +4,7 @@ import Hand from './Hand.js';
 export default class RightHand extends Hand {
 
   activePoints = {};
-  points = [...configHands.rightHand.activationPoints];
+  points = configHands.rightHand.activationPoints;
 
   constructor(ctx, w, h) {
     super(ctx, w, h);

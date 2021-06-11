@@ -1,5 +1,3 @@
-import configMusic from "./config/configMusic.js";
-
 export default class Grid {
 
   cells = [];
@@ -9,33 +7,33 @@ export default class Grid {
   constructor(container, scale, clickCallback) {
     this.container = container;
     this.scale = scale;
-    this.clickCallback = clickCallback;
+    // this.clickCallback = clickCallback;
   }
   draw() {
     const gridElem = document.getElementById('grid');
-    for (let y = 0; y < configMusic.howManyLines; y++) {
+    for (let y = 0; y < 11; y++) { //c
       const octave = document.createElement('div');
       octave.classList.add('octave');
       gridElem.appendChild(octave);
   
       for (let x = 0; x < this.scale.length; x++) {
-        const toneDiv = document.createElement('div');
+        const cellDiv = document.createElement('div');
         const currentNote = this.scale[x];
-        toneDiv.id = `${currentNote}-${y}`;
-        toneDiv.setAttribute('x', x);
-        toneDiv.setAttribute('y', y);
-        toneDiv.setAttribute('note', currentNote);
+        cellDiv.id = `${currentNote}-${y}`;
+        cellDiv.setAttribute('x', x);
+        cellDiv.setAttribute('y', y);
+        cellDiv.setAttribute('note', currentNote);
   
-        toneDiv.addEventListener('click', () => {
-          toneDiv.classList.toggle('note-active');
-          this.clickCallback(toneDiv);
+        cellDiv.addEventListener('click', () => {
+          cellDiv.classList.toggle('active');
+          // this.clickCallback(cellDiv);
         });
   
-        toneDiv.classList.add('tone');
-        octave.appendChild(toneDiv);
+        cellDiv.classList.add('grid-cell');
+        octave.appendChild(cellDiv);
         
-        this.cells.push(toneDiv);
-        this.gridNotes[toneDiv.id] = { currentNote };
+        this.cells.push(cellDiv);
+        this.gridNotes[cellDiv.id] = { currentNote };
       }
     }
   }

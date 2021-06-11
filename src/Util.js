@@ -17,7 +17,7 @@ export default class Util {
       if (touched) {
         if (!gridNotes[id].active) {
           gridNotes[id].active = true;
-          elem.classList.toggle('note-active');
+          elem.classList.toggle('active');
           touchedElements.push(elem);
         }
       } else {

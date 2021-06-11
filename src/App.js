@@ -1,15 +1,16 @@
-import config from "./config/config.js";
+//c
 import Util from "./Util.js";
 
-import Music from "./Music.js";
 import HandDetection from "./hands/HandDetection.js";
 import RightHand from "./hands/RightHand.js";
 import LeftHand from "./hands/LeftHand.js";
 import Grid from "./Grid.js";
 import Gestures from "./gestures/Gestures.js";
-import GestureClassifier from "./gestures/GestureClassifier.js";
+import config from "./config/config.js";
 
 export default class App {
+
+  grid = null;
 
   leftHand = null;
   rightHand = null;
@@ -39,7 +40,6 @@ export default class App {
     this.initializeHTMLElements();
     await this.initializeVideo();
     this.initializeCanvas();
-    this.initializeMusic();
     this.initializeHandDetection();
     this.initializeGrid();
     this.initializeHands();
@@ -53,7 +53,7 @@ export default class App {
     this.ctxVideo = canvasVideo.getContext('2d');
     this.canvasGrid = document.getElementById('canvasGrid');
     this.ctxGrid = canvasGrid.getContext('2d');
-    this.canvasGesture = document.getElementById('canvasGesture');;
+    this.canvasGesture = document.getElementById('canvasGesture');
     this.ctxGesture = canvasGesture.getContext('2d');
   }
 
@@ -61,8 +61,8 @@ export default class App {
     navigator.getUserMedia({
         audio: false,
         video: {
-          width: config.videoWidth,
-          height: config.videoHeight
+          width: config.videoWidth, //c
+          height: config.videoHeight //c
         }
       },
       stream => this.videoDiv.srcObject = stream,
@@ -80,23 +80,20 @@ export default class App {
     this.originY = this.canvasVideo.getBoundingClientRect().y;
   }
 
-  initializeMusic() {
-    this.music = new Music();
+  initializeGrid() {
+    this.canvasGrid.width = this.canvasWidth;
+    this.canvasGrid.height = this.canvasHeight;
+    this.gridDiv.style.width = `${this.canvasWidth}px`;
+    this.gridDiv.style.height = `${this.canvasHeight}px`;
+    this.grid = new Grid(this.gridDiv, ['B#', 'D', 'F', 'G', 'A']);
+    // this.music.scale, this.music.startPlayer.bind(this.music));
+    this.grid.draw();
   }
 
   initializeHandDetection() {
     this.handDetection = new HandDetection();
     this.handDetection.detect(this.videoDiv);
     this.handDetection.holistic.onResults(this.drawHands.bind(this));
-  }
-
-  initializeGrid() {
-    this.canvasGrid.width = this.canvasWidth;
-    this.canvasGrid.height = this.canvasHeight;
-    this.gridDiv.style.width = `${this.canvasWidth}px`;
-    this.gridDiv.style.height = `${this.canvasHeight}px`;
-    this.grid = new Grid(this.gridDiv, this.music.scale, this.music.startPlayer.bind(this.music));
-    this.grid.draw();
   }
 
   initializeHands() {
@@ -112,8 +109,8 @@ export default class App {
 
   /**
    * Draw hand points
-   * @param {Array} results - TBD
-   * @returns {number} - TBD
+   * @param {Array} results
+   * @returns {number}
    */
 
   drawHands(results) {
@@ -132,7 +129,8 @@ export default class App {
 
     if (leftHandPoints.length) {
       this.leftHand.draw(leftHandPoints);
-      // this.gestures.getGesture('bpm', [leftHandPoints[4], leftHandPoints[8]]); 
+      this.gestures.getGesture('bpm', [leftHandPoints[4], leftHandPoints[8]]);
+      this.gestures.getGesture('newGesture', leftHandPoints);
     }
   }
 
@@ -146,6 +144,6 @@ export default class App {
         y: this.originY
       }
     );
-    touchedElements.forEach(element => this.music.startPlayer(element));
+    // touchedElements.forEach(element => this.music.startPlayer(element));
   }
 }
